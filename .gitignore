@@ -1,0 +1,26 @@
+__pycache__/
+*.pyc
+*.pth
+*.th
+*.ckpt
+*.safetensors
+*.npy
+*.wav
+*.mp3
+*.jsonl
+.idea/
+.vscode/
+.cache/
+dist/
+build/
+*.egg-info/
+
+# downloaded from Hugging Face (see README)
+weights/
+tuney_small/
+
+# local outputs
+data/
+checkpoints/
+runs/
+tensorboard/

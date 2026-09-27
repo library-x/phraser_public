@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "phraser"
+version = "0.1.0"
+description = "Stem-aware music structure segmentation: joint section, per-stem event, beat and onset prediction over separated stems"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }  # code only; weights CC BY-NC 4.0, Tuney-Small CC BY-NC-ND 4.0
+dependencies = [
+    "torch>=2.5",
+    "torchaudio>=2.5",
+    "muq",
+    "librosa>=0.10",
+    "numpy",
+    "einops",
+    "soundfile",
+    "scipy",
+    "tqdm",
+    "ml-collections",   # vendored SCNet config
+    "pyyaml",
+]
+
+[project.optional-dependencies]
+# NATTEN is intentionally NOT listed: its wheel must match your torch/CUDA build.
+# Install it AFTER torch, following https://shi-labs.com/natten/  e.g.:
+#   uv pip install natten==0.17.5+torch250cu124 -f https://shi-labs.com/natten/wheels
+train = [
+    "tensorboard",
+    "scikit-learn",
+    "matplotlib",
+    "pydub",
+    "accelerate",   # SCNet apply
+    "julius",       # SCNet resampling
+]
+eval = [
+    "mir_eval",
+    "pandas",
+]
+dev = [
+    "pytest",
+]
+
+[tool.setuptools.packages.find]
+include = ["phraser*"]
+
+[tool.uv]
+# madmom (optional, DBN beat decoding in sweep_postproc.py) must come from git:
+#   uv pip install cython && uv pip install "git+https://github.com/CPJKU/madmom"
+constraint-dependencies = ["setuptools<70"]  # legacy setup.py deps (natten 0.14.x)
